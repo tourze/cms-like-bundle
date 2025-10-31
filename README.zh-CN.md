@@ -7,57 +7,57 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)](#)
 [![Code Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square)](#)
 
-A Symfony bundle that provides like/unlike functionality for CMS entities with logging and event dispatching.
+为 CMS 实体提供点赞/取消点赞功能的 Symfony Bundle，包含日志记录和事件分发。
 
-## Table of Contents
+## 目录
 
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-  - [1. Enable the Bundle](#1-enable-the-bundle)
-  - [2. Database Schema](#2-database-schema)
-  - [3. Basic Usage](#3-basic-usage)
-  - [4. Repository Usage](#4-repository-usage)
-- [API Reference](#api-reference)
-  - [JSON-RPC Methods](#json-rpc-methods)
-- [Configuration](#configuration)
-  - [Service Registration](#service-registration)
-  - [Event Configuration](#event-configuration)
-  - [Database Configuration](#database-configuration)
-- [Advanced Usage](#advanced-usage)
-  - [Custom Like Logic](#custom-like-logic)
-  - [Event Handling](#event-handling)
-  - [Cross-Module Integration](#cross-module-integration)
-- [Security](#security)
-  - [Authentication Requirements](#authentication-requirements)
-  - [Authorization Considerations](#authorization-considerations)
-  - [Data Protection](#data-protection)
-  - [Security Best Practices](#security-best-practices)
-- [Events](#events)
-- [Database Schema](#database-schema)
-- [Requirements](#requirements)
-- [License](#license)
+- [特性](#特性)
+- [安装](#安装)
+- [快速开始](#快速开始)
+  - [1. 启用 Bundle](#1-启用-bundle)
+  - [2. 数据库架构](#2-数据库架构)
+  - [3. 基本用法](#3-基本用法)
+  - [4. 仓储使用](#4-仓储使用)
+- [API 参考](#api-参考)
+  - [JSON-RPC 方法](#json-rpc-方法)
+- [配置](#配置)
+  - [服务注册](#服务注册)
+  - [事件配置](#事件配置)
+  - [数据库配置](#数据库配置)
+- [高级用法](#高级用法)
+  - [自定义点赞逻辑](#自定义点赞逻辑)
+  - [事件处理](#事件处理)
+  - [跨模块集成](#跨模块集成)
+- [安全](#安全)
+  - [认证要求](#认证要求)
+  - [授权考虑](#授权考虑)
+  - [数据保护](#数据保护)
+  - [安全最佳实践](#安全最佳实践)
+- [事件](#事件)
+- [数据库架构](#数据库架构)
+- [系统要求](#系统要求)
+- [许可证](#许可证)
 
-## Features
+## 特性
 
-- Like/unlike functionality for CMS entities
-- Like log tracking with user and IP information
-- JSON-RPC API endpoint for like operations
-- Event dispatching for like actions
-- Snowflake ID support for like logs
-- Timestamp and blame tracking
+- CMS 实体的点赞/取消点赞功能
+- 点赞日志跟踪，包含用户和 IP 信息
+- JSON-RPC API 端点用于点赞操作
+- 点赞动作的事件分发
+- 点赞日志的雪花 ID 支持
+- 时间戳和归属跟踪
 
-## Installation
+## 安装
 
 ```bash
 composer require tourze/cms-like-bundle
 ```
 
-## Quick Start
+## 快速开始
 
-### 1. Enable the Bundle
+### 1. 启用 Bundle
 
-Add the bundle to your `config/bundles.php`:
+将 Bundle 添加到您的 `config/bundles.php`：
 
 ```php
 <?php
@@ -68,20 +68,20 @@ return [
 ];
 ```
 
-### 2. Database Schema
+### 2. 数据库架构
 
-Run the migration to create the like log table:
+运行迁移以创建点赞日志表：
 
 ```bash
 php bin/console doctrine:migrations:migrate
 ```
 
-### 3. Basic Usage
+### 3. 基本用法
 
-Use the JSON-RPC endpoint to like/unlike entities:
+使用 JSON-RPC 端点来点赞/取消点赞实体：
 
 ```javascript
-// JSON-RPC request
+// JSON-RPC 请求
 {
     "jsonrpc": "2.0",
     "method": "LikeCmsEntity",
@@ -91,7 +91,7 @@ Use the JSON-RPC endpoint to like/unlike entities:
     "id": 1
 }
 
-// Response
+// 响应
 {
     "jsonrpc": "2.0",
     "result": {
@@ -101,20 +101,20 @@ Use the JSON-RPC endpoint to like/unlike entities:
 }
 ```
 
-### 4. Repository Usage
+### 4. 仓储使用
 
 ```php
 use Tourze\CmsLikeBundle\Repository\LikeLogRepository;
 
-// Inject the repository
+// 注入仓储
 public function __construct(
     private LikeLogRepository $likeLogRepository
 ) {}
 
-// Find like logs for a specific entity
+// 查找特定实体的点赞日志
 $logs = $this->likeLogRepository->findBy(['entity' => $entity]);
 
-// Check if user liked an entity
+// 检查用户是否点赞了某个实体
 $likeLog = $this->likeLogRepository->findOneBy([
     'entity' => $entity,
     'user' => $user,
@@ -122,39 +122,39 @@ $likeLog = $this->likeLogRepository->findOneBy([
 ]);
 ```
 
-## API Reference
+## API 参考
 
-### JSON-RPC Methods
+### JSON-RPC 方法
 
 #### LikeCmsEntity
 
-Toggles like/unlike status for a CMS entity.
+切换 CMS 实体的点赞/取消点赞状态。
 
-**Parameters:**
-- `entityId` (int): The ID of the entity to like/unlike
+**参数：**
+- `entityId` (int): 要点赞/取消点赞的实体 ID
 
-**Returns:**
-- `__message` (string): Success message indicating the action taken
+**返回：**
+- `__message` (string): 表示执行动作的成功消息
 
-**Security:** Requires authenticated user
+**安全：** 需要认证用户
 
-## Configuration
+## 配置
 
-## Service Registration
+## 服务注册
 
-The bundle automatically registers its services. The key services are:
+Bundle 自动注册其服务。主要服务包括：
 
 ```yaml
-# config/services.yaml (optional configuration)
+# config/services.yaml (可选配置)
 when@dev:
     services:
         Tourze\CmsLikeBundle\Service\LikeService:
-            public: true  # For debugging purposes
+            public: true  # 用于调试目的
 ```
 
-## Event Configuration
+## 事件配置
 
-Configure event listeners for like actions:
+为点赞动作配置事件监听器：
 
 ```yaml
 # config/services.yaml
@@ -164,9 +164,9 @@ services:
             - { name: kernel.event_listener, event: CmsBundle\Event\LikeEntityEvent }
 ```
 
-## Database Configuration
+## 数据库配置
 
-The bundle requires the following database configuration:
+Bundle 需要以下数据库配置：
 
 ```yaml
 # config/packages/doctrine.yaml
@@ -180,11 +180,11 @@ doctrine:
                 prefix: 'Tourze\CmsLikeBundle\Entity'
 ```
 
-## Advanced Usage
+## 高级用法
 
-## Custom Like Logic
+## 自定义点赞逻辑
 
-Extend the LikeService to implement custom logic:
+扩展 LikeService 以实现自定义逻辑：
 
 ```php
 use Tourze\CmsLikeBundle\Service\LikeService;
@@ -206,9 +206,9 @@ class CustomLikeService extends LikeService
 }
 ```
 
-## Event Handling
+## 事件处理
 
-Listen to like events for additional processing:
+监听点赞事件进行额外处理：
 
 ```php
 use CmsBundle\Event\LikeEntityEvent;
@@ -226,16 +226,16 @@ class LikeStatisticsSubscriber implements EventSubscriberInterface
     public function updateStatistics(LikeEntityEvent $event): void
     {
         $entity = $event->getEntity();
-        // Update cached like counts
-        // Send notifications
-        // Update user statistics
+        // 更新缓存的点赞数量
+        // 发送通知
+        // 更新用户统计
     }
 }
 ```
 
-## Cross-Module Integration
+## 跨模块集成
 
-Access other module services through proper service layer:
+通过适当的服务层访问其他模块服务：
 
 ```php
 use CmsBundle\Service\EntityService;use Tourze\CmsLikeBundle\Service\LikeService;
@@ -263,58 +263,58 @@ class ContentStatisticsService
 }
 ```
 
-## Security
+## 安全
 
-## Authentication Requirements
+## 认证要求
 
-The `LikeCmsEntity` JSON-RPC method requires authenticated users:
+`LikeCmsEntity` JSON-RPC 方法需要认证用户：
 
 ```php
 #[IsGranted(attribute: 'IS_AUTHENTICATED_FULLY')]
 class LikeCmsEntity extends LockableProcedure
 ```
 
-## Authorization Considerations
+## 授权考虑
 
-- Only authenticated users can like/unlike content
-- User sessions are validated before processing like operations
-- IP addresses are logged for audit trails
+- 只有认证用户可以点赞/取消点赞内容
+- 处理点赞操作前验证用户会话
+- 记录 IP 地址用于审计跟踪
 
-## Data Protection
+## 数据保护
 
-- User identifiers are stored securely
-- IP addresses are hashed for privacy protection
-- Like logs can be anonymized for GDPR compliance
+- 安全存储用户标识符
+- 为隐私保护对 IP 地址进行哈希处理
+- 点赞日志可以匿名化以符合 GDPR 合规
 
-## Security Best Practices
+## 安全最佳实践
 
 ```php
-// Implement rate limiting
+// 实现速率限制
 use Tourze\JsonRPCLockBundle\Procedure\LockableProcedure;
 
 class LikeCmsEntity extends LockableProcedure
 {
-    // Automatic locking prevents rapid-fire requests
+    // 自动锁定防止快速连续请求
 }
 
-// Validate entity permissions
+// 验证实体权限
 public function execute(): array
 {
     $entity = $this->entityService->findEntityBy([
         'id' => $this->entityId,
-        'state' => EntityState::PUBLISHED, // Only published content
+        'state' => EntityState::PUBLISHED, // 只允许已发布内容
     ]);
     
     if (null === $entity) {
         throw new ApiException('找不到文章');
     }
-    // ... rest of implementation
+    // ... 其余实现
 }
 ```
 
-## Events
+## 事件
 
-The bundle dispatches `LikeEntityEvent` when a like action occurs:
+Bundle 在点赞动作发生时分发 `LikeEntityEvent`：
 
 ```php
 use CmsBundle\Event\LikeEntityEvent;
@@ -331,7 +331,7 @@ class LikeEventSubscriber implements EventSubscriberInterface
 
     public function onLikeEntity(LikeEntityEvent $event): void
     {
-        // Handle like event
+        // 处理点赞事件
         $entity = $event->getEntity();
         $user = $event->getSender();
         $message = $event->getMessage();
@@ -339,27 +339,27 @@ class LikeEventSubscriber implements EventSubscriberInterface
 }
 ```
 
-## Database Schema
+## 数据库架构
 
-The bundle creates a `cms_like_log` table with the following columns:
+Bundle 创建一个 `cms_like_log` 表，包含以下列：
 
-- `id`: Snowflake ID
-- `user_id`: Foreign key to user table
-- `entity_id`: Foreign key to CMS entity table
-- `valid`: Boolean flag indicating if the like is active
-- `create_time`: Timestamp of creation (mapped to `createTime` property)
-- `update_time`: Timestamp of last update (mapped to `updateTime` property)
-- `created_by`: User who created the record
-- `updated_by`: User who last updated the record
-- `created_from_ip`: IP address where the record was created
-- `updated_from_ip`: IP address where the record was last updated
+- `id`: 雪花 ID
+- `user_id`: 用户表外键
+- `entity_id`: CMS 实体表外键
+- `valid`: 布尔标志，指示点赞是否有效
+- `create_time`: 创建时间戳(映射到 `createTime` 属性)
+- `update_time`: 最后更新时间戳(映射到 `updateTime` 属性)
+- `created_by`: 创建记录的用户
+- `updated_by`: 最后更新记录的用户
+- `created_from_ip`: 创建记录的 IP 地址
+- `updated_from_ip`: 最后更新记录的 IP 地址
 
-## Requirements
+## 系统要求
 
 - PHP 8.1+
 - Symfony 6.4+
 - Doctrine ORM 3.0+
 
-## License
+## 许可证
 
-This bundle is released under the MIT license. See the [LICENSE](LICENSE) file for details.
+此 Bundle 在 MIT 许可证下发布。详情请查看 [LICENSE](LICENSE) 文件。
