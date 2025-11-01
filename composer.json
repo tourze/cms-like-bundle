@@ -28,7 +28,7 @@
     "symfony/validator": "^7.3",
     "symfony/yaml": "^7.3",
     "tourze/bundle-dependency": "1.*",
-    "tourze/catalog-bundle": "0.0.*",
+    "tourze/catalog-bundle": "1.0.*",
     "tourze/doctrine-indexed-bundle": "1.0.*",
     "tourze/doctrine-ip-bundle": "1.0.*",
     "tourze/doctrine-snowflake-bundle": "1.0.*",
@@ -37,10 +37,10 @@
     "tourze/doctrine-user-bundle": "1.0.*",
     "tourze/easy-admin-menu-bundle": "1.0.*",
     "tourze/json-rpc-core": "1.0.*",
-    "tourze/json-rpc-lock-bundle": "0.1.*",
+    "tourze/json-rpc-lock-bundle": "1.0.*",
     "tourze/json-rpc-log-bundle": "0.1.*",
     "tourze/symfony-dependency-service-loader": "1.*",
-    "tourze/user-id-bundle": "0.1.*"
+    "tourze/user-id-bundle": "1.0.*"
   },
   "require-dev": {
     "doctrine/data-fixtures": "^2.0",
