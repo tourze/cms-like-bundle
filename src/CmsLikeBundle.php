@@ -2,7 +2,6 @@
 
 namespace Tourze\CmsLikeBundle;
 
-use BizUserBundle\BizUserBundle;
 use CmsBundle\CmsBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -18,7 +17,6 @@ class CmsLikeBundle extends Bundle implements BundleDependencyInterface
     public static function getBundleDependencies(): array
     {
         return [
-            BizUserBundle::class => ['test' => true],
             CmsBundle::class => ['all' => true],
             DoctrineBundle::class => ['all' => true],
             SecurityBundle::class => ['all' => true],

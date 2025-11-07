@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tourze\CmsLikeBundle\Tests\Repository;
 
-use BizUserBundle\Entity\BizUser;
 use CmsBundle\Entity\Entity;
 use CmsBundle\Enum\EntityState;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -13,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Tourze\CmsLikeBundle\Entity\LikeLog;
 use Tourze\CmsLikeBundle\Repository\LikeLogRepository;
 use Tourze\PHPUnitSymfonyKernelTest\AbstractRepositoryTestCase;
+use Tourze\UserServiceContracts\UserManagerInterface;
 
 /**
  * @internal
@@ -49,11 +49,9 @@ final class LikeLogRepositoryTest extends AbstractRepositoryTestCase
         $repository = $this->getRepository();
 
         // 创建测试用户
-        $user = new BizUser();
-        $user->setUsername('test_user_' . time());
-        $user->setNickName('测试用户');
-        $user->setPlainPassword('test_password');
-        self::getEntityManager()->persist($user);
+        $userService = self::getService(UserManagerInterface::class);
+        $user = $userService->createUser('test_user_' . time());
+        $userService->saveUser($user);
 
         // 创建测试实体
         $entity = new Entity();
@@ -84,11 +82,9 @@ final class LikeLogRepositoryTest extends AbstractRepositoryTestCase
         $repository = $this->getRepository();
 
         // 创建测试用户
-        $user = new BizUser();
-        $user->setUsername('test_user_2_' . time());
-        $user->setNickName('测试用户2');
-        $user->setPlainPassword('test_password');
-        self::getEntityManager()->persist($user);
+        $userService = self::getService(UserManagerInterface::class);
+        $user = $userService->createUser('test_user_2_' . time());
+        $userService->saveUser($user);
 
         // 创建测试实体
         $entity = new Entity();
@@ -109,17 +105,12 @@ final class LikeLogRepositoryTest extends AbstractRepositoryTestCase
         $repository = $this->getRepository();
 
         // 创建两个不同的测试用户
-        $user1 = new BizUser();
-        $user1->setUsername('test_user_1_' . time());
-        $user1->setNickName('测试用户1');
-        $user1->setPlainPassword('test_password');
-        self::getEntityManager()->persist($user1);
+        $userService = self::getService(UserManagerInterface::class);
+        $user1 = $userService->createUser('test_user_1_' . time());
+        $userService->saveUser($user1);
 
-        $user2 = new BizUser();
-        $user2->setUsername('test_user_2_' . time());
-        $user2->setNickName('测试用户2');
-        $user2->setPlainPassword('test_password');
-        self::getEntityManager()->persist($user2);
+        $user2 = $userService->createUser('test_user_2_' . time());
+        $userService->saveUser($user2);
 
         // 创建测试实体
         $entity = new Entity();
