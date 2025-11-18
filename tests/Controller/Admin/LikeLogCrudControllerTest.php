@@ -23,11 +23,6 @@ final class LikeLogCrudControllerTest extends AbstractEasyAdminControllerTestCas
         return LikeLog::class;
     }
 
-    public function testGetEntityFqcn(): void
-    {
-        $this->assertSame(LikeLog::class, LikeLogCrudController::getEntityFqcn());
-    }
-
     public function testIndexPage(): void
     {
         $client = self::createAuthenticatedClient();
