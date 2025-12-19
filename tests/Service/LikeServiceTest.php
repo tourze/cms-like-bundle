@@ -133,8 +133,40 @@ final class LikeServiceTest extends AbstractIntegrationTestCase
         $service = self::getService(LikeService::class);
 
         // 验证所有公共方法都存在且可调用
+        $this->assertTrue(method_exists($service, 'isLikedByUser'));
         $this->assertTrue(method_exists($service, 'findLikeLogBy'));
         $this->assertTrue(method_exists($service, 'findLikeLogsBy'));
         $this->assertTrue(method_exists($service, 'countLikeLogs'));
+    }
+
+    public function testIsLikedByUserMethodSignature(): void
+    {
+        // 从容器中获取服务
+        $service = self::getService(LikeService::class);
+
+        // 获取方法反射信息
+        $reflection = new \ReflectionClass($service);
+        $method = $reflection->getMethod('isLikedByUser');
+
+        // 验证方法签名
+        $this->assertEquals('isLikedByUser', $method->getName());
+        $this->assertTrue($method->isPublic());
+        $this->assertEquals(2, $method->getNumberOfParameters());
+
+        // 验证参数类型
+        $parameters = $method->getParameters();
+        $this->assertEquals('entity', $parameters[0]->getName());
+        $this->assertTrue($parameters[0]->getType() instanceof \ReflectionNamedType);
+        $this->assertEquals('Tourze\CmsBundle\Entity\Entity', $parameters[0]->getType()->getName());
+
+        $this->assertEquals('user', $parameters[1]->getName());
+        $this->assertTrue($parameters[1]->getType() instanceof \ReflectionNamedType);
+        $this->assertEquals('Symfony\Component\Security\Core\User\UserInterface', $parameters[1]->getType()->getName());
+
+        // 验证返回类型
+        $returnType = $method->getReturnType();
+        $this->assertNotNull($returnType);
+        $this->assertInstanceOf(\ReflectionNamedType::class, $returnType);
+        $this->assertEquals('bool', $returnType->getName());
     }
 }

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tourze\CmsLikeBundle\DataFixtures;
 
-use CmsBundle\Entity\Entity;
-use CmsBundle\Enum\EntityState;
+use Tourze\CmsBundle\Entity\Entity;
+use Tourze\CmsBundle\Enum\EntityState;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Tourze\CmsLikeBundle\Entity\LikeLog;
 
-class LikeLogFixtures extends Fixture
+final class LikeLogFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {

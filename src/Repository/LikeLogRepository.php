@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tourze\CmsLikeBundle\Repository;
 
-use CmsBundle\Entity\Entity;
+use Tourze\CmsBundle\Entity\Entity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,7 +15,7 @@ use Tourze\PHPUnitSymfonyKernelTest\Attribute\AsRepository;
  * @extends ServiceEntityRepository<LikeLog>
  */
 #[AsRepository(entityClass: LikeLog::class)]
-class LikeLogRepository extends ServiceEntityRepository
+final class LikeLogRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

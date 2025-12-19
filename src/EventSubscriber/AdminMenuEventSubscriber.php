@@ -9,7 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tourze\CmsLikeBundle\Entity\LikeLog;
 
-class AdminMenuEventSubscriber implements EventSubscriberInterface
+final class AdminMenuEventSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

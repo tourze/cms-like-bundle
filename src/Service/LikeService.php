@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tourze\CmsLikeBundle\Service;
 
+use Tourze\CmsBundle\Entity\Entity;
+use Tourze\CmsBundle\Service\LikeServiceInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Tourze\CmsLikeBundle\Entity\LikeLog;
 use Tourze\CmsLikeBundle\Repository\LikeLogRepository;
 
@@ -10,11 +16,21 @@ use Tourze\CmsLikeBundle\Repository\LikeLogRepository;
  *
  * 为其他模块提供点赞查询功能，避免直接调用 Repository
  */
-readonly class LikeService
+#[AsDecorator(decorates: LikeServiceInterface::class)]
+readonly final class LikeService implements LikeServiceInterface
 {
     public function __construct(
         private LikeLogRepository $likeLogRepository,
     ) {
+    }
+
+    public function isLikedByUser(Entity $entity, UserInterface $user): bool
+    {
+        return null !== $this->likeLogRepository->findOneBy([
+            'entity' => $entity,
+            'user' => $user,
+            'valid' => true,
+        ]);
     }
 
     /**

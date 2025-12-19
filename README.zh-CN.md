@@ -161,7 +161,7 @@ when@dev:
 services:
     App\EventListener\LikeEventListener:
         tags:
-            - { name: kernel.event_listener, event: CmsBundle\Event\LikeEntityEvent }
+            - { name: kernel.event_listener, event: Tourze\CmsBundle\Event\LikeEntityEvent }
 ```
 
 ## 数据库配置
@@ -211,7 +211,7 @@ class CustomLikeService extends LikeService
 监听点赞事件进行额外处理：
 
 ```php
-use CmsBundle\Event\LikeEntityEvent;
+use Tourze\CmsBundle\Event\LikeEntityEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LikeStatisticsSubscriber implements EventSubscriberInterface
@@ -238,7 +238,7 @@ class LikeStatisticsSubscriber implements EventSubscriberInterface
 通过适当的服务层访问其他模块服务：
 
 ```php
-use CmsBundle\Service\EntityService;use Tourze\CmsLikeBundle\Service\LikeService;
+use Tourze\CmsBundle\Service\EntityService;use Tourze\CmsLikeBundle\Service\LikeService;
 
 class ContentStatisticsService
 {
@@ -317,7 +317,7 @@ public function execute(): array
 Bundle 在点赞动作发生时分发 `LikeEntityEvent`：
 
 ```php
-use CmsBundle\Event\LikeEntityEvent;
+use Tourze\CmsBundle\Event\LikeEntityEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LikeEventSubscriber implements EventSubscriberInterface

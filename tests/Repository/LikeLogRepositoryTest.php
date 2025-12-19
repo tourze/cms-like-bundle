@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tourze\CmsLikeBundle\Tests\Repository;
 
-use CmsBundle\Entity\Entity;
-use CmsBundle\Enum\EntityState;
+use Tourze\CmsBundle\Entity\Entity;
+use Tourze\CmsBundle\Enum\EntityState;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;

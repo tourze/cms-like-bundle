@@ -161,7 +161,7 @@ Configure event listeners for like actions:
 services:
     App\EventListener\LikeEventListener:
         tags:
-            - { name: kernel.event_listener, event: CmsBundle\Event\LikeEntityEvent }
+            - { name: kernel.event_listener, event: Tourze\CmsBundle\Event\LikeEntityEvent }
 ```
 
 ## Database Configuration
@@ -211,7 +211,7 @@ class CustomLikeService extends LikeService
 Listen to like events for additional processing:
 
 ```php
-use CmsBundle\Event\LikeEntityEvent;
+use Tourze\CmsBundle\Event\LikeEntityEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LikeStatisticsSubscriber implements EventSubscriberInterface
@@ -238,7 +238,7 @@ class LikeStatisticsSubscriber implements EventSubscriberInterface
 Access other module services through proper service layer:
 
 ```php
-use CmsBundle\Service\EntityService;use Tourze\CmsLikeBundle\Service\LikeService;
+use Tourze\CmsBundle\Service\EntityService;use Tourze\CmsLikeBundle\Service\LikeService;
 
 class ContentStatisticsService
 {
@@ -317,7 +317,7 @@ public function execute(): array
 The bundle dispatches `LikeEntityEvent` when a like action occurs:
 
 ```php
-use CmsBundle\Event\LikeEntityEvent;
+use Tourze\CmsBundle\Event\LikeEntityEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LikeEventSubscriber implements EventSubscriberInterface

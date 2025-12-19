@@ -4,7 +4,7 @@ namespace Tourze\CmsLikeBundle\DependencyInjection;
 
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class CmsLikeExtension extends AutoExtension
+final class CmsLikeExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {

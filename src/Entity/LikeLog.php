@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tourze\CmsLikeBundle\Entity;
 
-use CmsBundle\Entity\Entity;
+use Tourze\CmsBundle\Entity\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
